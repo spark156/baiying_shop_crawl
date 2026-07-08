@@ -1,0 +1,2 @@
+# 每行格式：店铺名称 + Tab/空格 + 百应达人主页网址
+示例店铺	https://buyin.jinritemai.com/dashboard/servicehall/daren-profile?uid=REPLACE_WITH_UID

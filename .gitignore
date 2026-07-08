@@ -1,0 +1,18 @@
+__pycache__/
+*.py[cod]
+.idea/
+.agents/
+.codex/
+.venv/
+venv/
+
+# Runtime data and authenticated browser profiles
+outputs/
+work/
+shops.txt
+history_store.py
+
+# Local exports and logs
+*.xlsx
+*.csv
+*.log

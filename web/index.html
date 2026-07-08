@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>百应成交商品库</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-block">
+      <div class="brand-mark">百</div>
+      <div>
+        <h1>百应成交商品库</h1>
+        <p>场景分析历史数据</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span id="chromeStatus" class="status-chip">检测浏览器</span>
+      <button id="startChromeButton" class="button secondary">启动登录浏览器</button>
+      <button id="shopSettingsButton" class="button secondary">店铺管理</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="filter-band" aria-label="数据筛选">
+      <div class="field-group date-field">
+        <label for="startDateDisplay">开始日期</label>
+        <div class="date-input-wrap">
+          <input id="startDateDisplay" class="date-display" type="text" inputmode="numeric" placeholder="MM/DD/YYYY" maxlength="10" autocomplete="off">
+          <input id="startDate" class="date-native" type="date" aria-label="选择开始日期" tabindex="-1">
+        </div>
+      </div>
+      <div class="field-group date-field">
+        <label for="endDateDisplay">结束日期</label>
+        <div class="date-input-wrap">
+          <input id="endDateDisplay" class="date-display" type="text" inputmode="numeric" placeholder="MM/DD/YYYY" maxlength="10" autocomplete="off">
+          <input id="endDate" class="date-native" type="date" aria-label="选择结束日期" tabindex="-1">
+        </div>
+      </div>
+      <div class="field-group shop-field">
+        <label>店铺</label>
+        <div class="shop-picker">
+          <button id="shopPickerButton" class="picker-button" aria-expanded="false">全部店铺</button>
+          <div id="shopMenu" class="shop-menu" hidden></div>
+        </div>
+      </div>
+      <div class="field-group page-field">
+        <label for="maxPages">抓取页数</label>
+        <select id="maxPages">
+          <option value="1">1 页</option>
+          <option value="2" selected>2 页</option>
+          <option value="3">3 页</option>
+          <option value="5">5 页</option>
+          <option value="10">10 页</option>
+        </select>
+      </div>
+      <div class="filter-actions">
+        <button id="queryButton" class="button secondary">查询历史</button>
+        <button id="crawlButton" class="button primary">更新缺失数据</button>
+        <button id="exportButton" class="button secondary">导出 Excel</button>
+      </div>
+    </section>
+
+    <section class="summary-band" aria-label="数据概览">
+      <div class="summary-item"><span>成交商品</span><strong id="productCount">0</strong></div>
+      <div class="summary-item"><span>直播场次</span><strong id="sessionCount">0</strong></div>
+      <div class="summary-item"><span>店铺数</span><strong id="shopCount">0</strong></div>
+      <div class="summary-item wide"><span>数据范围</span><strong id="dateRange">-</strong></div>
+      <div class="summary-note" id="summaryNote">正在读取历史数据</div>
+    </section>
+
+    <section id="taskPanel" class="task-panel" hidden>
+      <div class="task-heading">
+        <div>
+          <span id="taskDot" class="task-dot"></span>
+          <strong id="taskMessage">准备抓取</strong>
+        </div>
+        <button id="toggleLogButton" class="text-button">查看明细</button>
+      </div>
+      <div id="taskLog" class="task-log" hidden></div>
+    </section>
+
+    <section class="data-section">
+      <div class="section-heading">
+        <div>
+          <h2>成交商品明细</h2>
+          <span id="resultMeta">0 条记录</span>
+        </div>
+        <label class="page-size-label">每页
+          <select id="pageSize">
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+          </select>
+        </label>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="image-column">商品图片</th>
+              <th>店铺名称</th>
+              <th>直播时间</th>
+              <th class="product-column">商品名称</th>
+              <th>到手价</th>
+              <th>单场结算额</th>
+            </tr>
+          </thead>
+          <tbody id="recordsBody"></tbody>
+        </table>
+        <div id="emptyState" class="empty-state" hidden>当前筛选范围内暂无成交商品</div>
+      </div>
+      <div class="pagination">
+        <button id="previousButton" class="button secondary" disabled>上一页</button>
+        <span id="pageInfo">第 1 / 1 页</span>
+        <button id="nextButton" class="button secondary" disabled>下一页</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="shopDialog">
+    <form method="dialog" class="dialog-shell">
+      <div class="dialog-header">
+        <div><h2>店铺管理</h2><p>店铺名称与百应达人主页</p></div>
+        <button class="close-button" value="cancel" aria-label="关闭">×</button>
+      </div>
+      <div id="shopRows" class="shop-rows"></div>
+      <button id="addShopButton" type="button" class="button secondary">添加店铺</button>
+      <div class="dialog-actions">
+        <button value="cancel" class="button secondary">取消</button>
+        <button id="saveShopsButton" type="button" class="button primary">保存店铺</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="/app.js"></script>
+</body>
+</html>
